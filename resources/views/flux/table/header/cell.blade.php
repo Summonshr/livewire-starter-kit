@@ -20,7 +20,7 @@
             {{ $slot }}
         </div>
         @if ($sortable)
-            @if ($direction === 'asc' && $sorted)
+            @if ($direction === 'desc' && $sorted)
                 <div class="flex items-center justify-end">
                     <svg class="shrink-0 [:where(&amp;)]:size-4" data-flux-icon="" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
@@ -30,7 +30,7 @@
                     </svg>
                 </div>
             @endif
-            @if ($direction === 'desc' && $sorted)
+            @if ($direction === 'asc' && $sorted)
                 <div class="flex items-center justify-end">
                     <svg class="shrink-0 [:where(&amp;)]:size-4" data-flux-icon="" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
