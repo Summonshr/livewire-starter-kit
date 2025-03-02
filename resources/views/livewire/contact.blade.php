@@ -55,7 +55,7 @@ new class extends Component {
                         placeholder="https://twitter/sumfreelancer" />
                     <flux:input icon="github" wire:model="form.github" label="GitHub"
                         placeholder="https://github.com/summonshr" />
-                    <flux:input icon="website" wire:model="form.website" label="Website"
+                    <flux:input icon="link" wire:model="form.website" label="Website"
                         placeholder="https://example.com" />
                 </flux:grid>
             </flux:fieldset>

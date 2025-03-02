@@ -1,29 +1,41 @@
+{{-- Credit: Lucide (https://lucide.dev) --}}
+
 @props([
     'variant' => 'outline',
 ])
 
 @php
-    if ($variant === 'solid') {
-        throw new \Exception('The "solid" variant is not supported in Lucide.');
-    }
+if ($variant === 'solid') {
+    throw new \Exception('The "solid" variant is not supported in Lucide.');
+}
 
-    $classes = Flux::classes('shrink-0')->add(
-        match ($variant) {
-            'outline' => '[:where(&)]:size-6',
-            'solid' => '[:where(&)]:size-6',
-            'mini' => '[:where(&)]:size-5',
-            'micro' => '[:where(&)]:size-4',
-        },
-    );
+$classes = Flux::classes('shrink-0')
+    ->add(match($variant) {
+        'outline' => '[:where(&)]:size-6',
+        'solid' => '[:where(&)]:size-6',
+        'mini' => '[:where(&)]:size-5',
+        'micro' => '[:where(&)]:size-4',
+    });
 
-    $strokeWidth = match ($variant) {
-        'outline' => 2,
-        'mini' => 2.25,
-        'micro' => 2.5,
-    };
+$strokeWidth = match ($variant) {
+    'outline' => 2,
+    'mini' => 2.25,
+    'micro' => 2.5,
+};
 @endphp
 
-<svg {{ $attributes->class($classes) }} data-flux-icon width="300" height="271" xmlns="http://www.w3.org/2000/svg">
-    <path
-        d="m236 0h46l-101 115 118 156h-92.6l-72.5-94.8-83 94.8h-46l107-123-113-148h94.9l65.5 86.6zm-16.1 244h25.5l-165-218h-27.4z" />
+<svg
+    {{ $attributes->class($classes) }}
+    data-flux-icon
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="{{ $strokeWidth }}"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    data-slot="icon"
+>
+  <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
 </svg>

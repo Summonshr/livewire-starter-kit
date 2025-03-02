@@ -2,16 +2,22 @@
     'sortable' => false,
     'direction' => 'asc',
     'sorted' => false,
-    'skills' => null,
+    'align' => 'left',
 ])
 
 @php
     $classes = Flux::classes(
-        'py-3 px-3 first:pl-0 last:pr-0 text-left text-sm font-medium text-zinc-800 dark:text-white  **:data-flux-table-sortable:last:mr-0',
+        'py-3 px-3 first:pl-0 last:pr-0 text-sm text-zinc-800 dark:text-white',
     );
     if($sortable) {
         $classes->add('cursor-pointer');
     }
+    $classes->add(match($align) {
+        'left' => 'text-left',
+        'center' => 'text-center',
+        'right' => 'text-right',
+        default => 'text-left',
+    });
 @endphp
 
 <th {{ $attributes->class($classes) }}>
