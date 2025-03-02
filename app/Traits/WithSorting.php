@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Traits;
+
 use Livewire\Attributes\Url;
 
 trait WithSorting
