@@ -22,7 +22,7 @@ class ExperienceForm extends Form
     #[Validate('required|date|after:start_date')]
     public ?string $end_date = '';
 
-    #[Validate('required|string|max:100')]
+    #[Validate('required|string|max:5000')]
     public ?string $summary = '';
 
     #[Validate('required|boolean')]
