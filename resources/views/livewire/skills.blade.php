@@ -29,7 +29,7 @@ new class extends Component {
     {
         $skills = Skill::query()->tap(fn($query) => $this->sortBy ? $query->orderBy($this->sortBy, $this->sortDirection) : $query)->paginate(5);
 
-        if($skills->count() > 0) {
+        if ($skills->count() > 0) {
             return $skills;
         }
 
@@ -72,31 +72,34 @@ new class extends Component {
 };
 ?>
 <flux:container>
-    <flux:row>
-        <flux:heading size="lg">Skills</flux:heading>
-        <flux:spacer />
-        <flux:modal.trigger name="skill-form">
-            <flux:button>Add Skill Group</flux:button>
-        </flux:modal.trigger>
-    </flux:row>
+    <flux:grid>
+        <flux:row>
+            <flux:heading size="lg">Skills</flux:heading>
+            <flux:spacer />
+            <flux:modal.trigger name="skill-form">
+                <flux:button>Add Skill</flux:button>
+            </flux:modal.trigger>
+        </flux:row>
+    </flux:grid>
     <flux:separator />
-    <flux:table :paginate="$skills">
-        <flux:table.header>
-            <flux:table.header.row>
-                <flux:table.header.cell sortable :sorted="$sortBy === 'group'" :direction="$sortDirection"
-                    wire:click="sort('group')">Skill Group</flux:table.header.cell>
-                <flux:table.header.cell sortable :sorted="$sortBy === 'skill'" :direction="$sortDirection"
-                    wire:click="sort('skill')">Skill</flux:table.header.cell>
-                <flux:table.header.cell sortable :sorted="$sortBy === 'description'" :direction="$sortDirection"
-                    wire:click="sort('description')">Description</flux:table.header.cell>
-                <flux:table.header.cell sortable :sorted="$sortBy === 'level'" :direction="$sortDirection"
-                    wire:click="sort('level')">Level</flux:table.header.cell>
-                <flux:table.header.cell>Actions</flux:table.header.cell>
-            </flux:table.header.row>
-        </flux:table.header>
-        <flux:table.body>
-            @foreach ($skills as $skill)
-                <flux:table.body.row>
+    <flux:grid>
+        <flux:table :paginate="$skills">
+            <flux:table.header>
+                <flux:table.header.column>
+                    <flux:table.header.cell sortable :sorted="$sortBy === 'group'" :direction="$sortDirection"
+                        wire:click="sort('group')">Skill Group</flux:table.header.cell>
+                    <flux:table.header.cell sortable :sorted="$sortBy === 'skill'" :direction="$sortDirection"
+                        wire:click="sort('skill')">Skill</flux:table.header.cell>
+                    <flux:table.header.cell sortable :sorted="$sortBy === 'description'" :direction="$sortDirection"
+                        wire:click="sort('description')">Description</flux:table.header.cell>
+                    <flux:table.header.cell sortable :sorted="$sortBy === 'level'" :direction="$sortDirection"
+                        wire:click="sort('level')">Level</flux:table.header.cell>
+                    <flux:table.header.cell>Actions</flux:table.header.cell>
+                </flux:table.header.column>
+            </flux:table.header>
+            <flux:table.body>
+                @foreach ($skills as $skill)
+                <flux:table.body.column>
                     <flux:table.body.cell>{{ $skill->group }}</flux:table.body.cell>
                     <flux:table.body.cell>{{ $skill->skill }}</flux:table.body.cell>
                     <flux:table.body.cell>{{ $skill->description }}</flux:table.body.cell>
@@ -111,10 +114,11 @@ new class extends Component {
                                     variant="subtle" inset />
                             </flux:modal.trigger>
                         </flux:table.body.cell>
-                </flux:table.body.row>
-            @endforeach
-        </flux:table.body>
-    </flux:table>
+                </flux:table.body.column>
+                @endforeach
+            </flux:table.body>
+        </flux:table>
+    </flux:grid>
     <flux:modal name="delete-profile" class="min-w-xs">
         <flux:spaced>
             <flux:heading size="lg">Delete project?</flux:heading>
@@ -122,7 +126,7 @@ new class extends Component {
                 This action cannot be reversed.
             </flux:subheading>
 
-            <flux:row no-width>
+            <flux:row>
                 <flux:modal.close>
                     <flux:button variant="ghost">Cancel</flux:button>
                 </flux:modal.close>
@@ -140,7 +144,7 @@ new class extends Component {
             <flux:grid>
                 <flux:select placeholder="Select a skill group" wire:model="form.group">
                     @foreach (\App\Enums\SkillGroup::cases() as $value)
-                        <flux:select.option value="{{ $value }}">{{ $value }}</flux:select.option>
+                    <flux:select.option value="{{ $value }}">{{ $value }}</flux:select.option>
                     @endforeach
                 </flux:select>
                 <flux:input wire:model="form.skill" label="Skill Name" placeholder="Laravel" />
@@ -148,14 +152,14 @@ new class extends Component {
                     placeholder="Laravel is a PHP web framework" />
                 <flux:input type="range" max="10" min="0" wire:model="form.level" label="Skill Level"
                     placeholder="0-9" />
-                <flux:row no-width>
-                    <flux:modal.close>
-                        <flux:button variant="ghost">Cancel</flux:button>
-                    </flux:modal.close>
-                    <flux:spacer />
-                    <flux:button type="submit" variant="primary">Save changes</flux:button>
-                </flux:row>
             </flux:grid>
+            <flux:row>
+                <flux:modal.close>
+                    <flux:button variant="ghost">Cancel</flux:button>
+                </flux:modal.close>
+                <flux:spacer />
+                <flux:button type="submit" variant="primary">Save changes</flux:button>
+            </flux:row>
         </form>
     </flux:modal>
 </flux:container>

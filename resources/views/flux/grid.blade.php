@@ -2,7 +2,7 @@
     'cols' => null,
 ])
 @php
-    $classes = Flux::classes('grid gap-x-4 gap-y-6');
+    $classes = Flux::classes('w-full h-full grid gap-x-4 gap-y-6 mb-6');
 
     if ($cols) {
         $classes->add(match($cols) {

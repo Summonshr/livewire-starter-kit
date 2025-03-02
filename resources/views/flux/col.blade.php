@@ -1,5 +1,5 @@
 @php
-    $classes = Flux::classes('flex py-6 flex-col');
+    $classes = Flux::classes('flex flex-col');
 @endphp
 <div {{ $attributes->class($classes) }}>
     {{ $slot }}

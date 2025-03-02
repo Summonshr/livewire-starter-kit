@@ -16,6 +16,7 @@
                     <flux:navlist.item  wire:navigate icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')">Dashboard</flux:navlist.item>
                     <flux:navlist.item  wire:navigate icon="book-open-text" :href="route('contact')" :current="request()->routeIs('contact')">Contact</flux:navlist.item>
                     <flux:navlist.item  wire:navigate icon="queue-list" :href="route('skills')" :current="request()->routeIs('skills')">Skills</flux:navlist.item>
+                    <flux:navlist.item  wire:navigate icon="briefcase" :href="route('experiences')" :current="request()->routeIs('experiences')">Experiences</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 

@@ -19,19 +19,21 @@ new class extends Component {
 }; ?>
 
 <flux:container>
-    <flux:col>
-        <flux:heading size="lg">Basic Information</flux:heading>
-        <flux:subheading>Fill in the details and save</flux:subheading>
-    </flux:col>
+    <flux:row>
+        <flux:col>
+            <flux:heading size="lg">Basic Information</flux:heading>
+            <flux:subheading>Fill in the details and save</flux:subheading>
+        </flux:col>
+    </flux:row>
     <flux:separator />
     <form wire:submit="save">
-        <flux:col>
+        <flux:grid>
             <flux:fieldset>
                 <flux:legend>About</flux:legend>
                 <flux:textarea wire:model="form.summary" label="Summary"
                     placeholder="Write a brief summary of yourself." />
             </flux:fieldset>
-        </flux:col>
+        </flux:grid>
         <flux:separator />
         <flux:col>
             <flux:fieldset>
@@ -39,7 +41,7 @@ new class extends Component {
                 <flux:grid cols="2">
                     <flux:input wire:model="form.name" label="Name" placeholder="John Doe" />
                     <flux:input wire:model="form.email" label="Email" placeholder="summonshr@gmail.com" />
-                    <flux:input wire:model="form.phone" label="Phone" placeholder="+1 (555) 123-4567" />
+                <flux:input wire:model="form.phone" label="Phone" placeholder="+1 (555) 123-4567" />
                     <flux:input wire:model="form.address" label="Address" placeholder="123 Main St, City, State, 12345" />
                 </flux:grid>
             </flux:fieldset>
