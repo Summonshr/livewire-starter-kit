@@ -2,46 +2,20 @@
 
 use Livewire\Volt\Component;
 use App\Models\Skill;
-use App\Livewire\Forms\ContactForm;
-use Livewire\Attributes\Validate;
-use Livewire\Attributes\Url;
-use Illuminate\Support\Collection;
 use Livewire\WithPagination;
+use App\Livewire\Forms\SkillForm;
+use App\Traits\WithSorting;
 
 new class extends Component {
+
     use WithPagination;
+    use WithSorting;
 
-    public ?int $skillId = null;
+    public $paginationTheme = 'tailwind';
 
-    #[Validate('required|string|max:100')]
-    public string $group = '';
+    public SkillForm $form;
 
-    #[Validate('required|string|max:100|unique:skills,skill')]
-    public string $skill = '';
-
-    #[Validate('required|string|max:100')]
-    public string $description = '';
-
-    #[Validate('required|numeric|digits_between:1,5')]
-    public int $level = 0;
-
-    #[Url]
-    public $sortBy = '';
-
-    #[Url]
-    public $sortDirection = 'desc';
-
-    public int $toDelete = 0;
-
-    public function sort($column)
-    {
-        if ($this->sortBy === $column) {
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
-        } else {
-            $this->sortBy = $column;
-            $this->sortDirection = 'asc';
-        }
-    }
+    public ?int $toDelete;
 
     public function with(): array
     {
@@ -53,6 +27,14 @@ new class extends Component {
     #[\Livewire\Attributes\Computed]
     public function skills(): \Illuminate\Pagination\LengthAwarePaginator
     {
+        $skills = Skill::query()->tap(fn($query) => $this->sortBy ? $query->orderBy($this->sortBy, $this->sortDirection) : $query)->paginate(5);
+
+        if($skills->count() > 0) {
+            return $skills;
+        }
+
+        $this->resetPage();
+
         return Skill::query()->tap(fn($query) => $this->sortBy ? $query->orderBy($this->sortBy, $this->sortDirection) : $query)->paginate(5);
     }
 
@@ -60,17 +42,7 @@ new class extends Component {
     {
         $this->validate();
 
-        Skill::updateOrCreate(
-            [
-                'id' => $this->skillId,
-            ],
-            [
-                'group' => $this->group,
-                'skill' => $this->skill,
-                'description' => $this->description,
-                'level' => $this->level,
-            ],
-        );
+        $this->form->save();
 
         $this->modal('skill-form')->close();
 
@@ -79,7 +51,7 @@ new class extends Component {
 
     public function deleteSkill($id)
     {
-        Skill::findOrFail($id)->delete();
+        $this->form->delete($id);
 
         $this->modal('delete-profile')->close();
 
@@ -88,7 +60,7 @@ new class extends Component {
 
     public function edit($id)
     {
-        $this->fill(Skill::select(['id as skillId', 'group', 'skill', 'description', 'level'])->findOrFail($id));
+        $this->form->fillById($id);
         $this->modal('skill-form')->show();
     }
 
@@ -124,7 +96,7 @@ new class extends Component {
         </flux:table.header>
         <flux:table.body>
             @foreach ($skills as $skill)
-                <flux:table.row>
+                <flux:table.body.row>
                     <flux:table.body.cell>{{ $skill->group }}</flux:table.body.cell>
                     <flux:table.body.cell>{{ $skill->skill }}</flux:table.body.cell>
                     <flux:table.body.cell>{{ $skill->description }}</flux:table.body.cell>
@@ -132,14 +104,14 @@ new class extends Component {
                         <flux:table.body.cell>
                             <flux:modal.trigger name="edit-profile">
                                 <flux:button icon="pencil-square" class="mr-2" wire:click="edit({{ $skill->id }})"
-                                    variant="ghost" inset />
+                                    variant="subtle" inset />
                             </flux:modal.trigger>
                             <flux:modal.trigger name="delete-profile">
                                 <flux:button icon="trash" x-on:click="$wire.toDelete = {{ $skill->id }}"
-                                    variant="ghost" inset />
+                                    variant="subtle" inset />
                             </flux:modal.trigger>
                         </flux:table.body.cell>
-                </flux:table.row>
+                </flux:table.body.row>
             @endforeach
         </flux:table.body>
     </flux:table>
@@ -162,19 +134,19 @@ new class extends Component {
     </flux:modal>
     <flux:modal wire:close="close" name="skill-form" class="md:w-128">
         <form wire:submit.prevent="updateSkill">
-            <flux:heading size="lg">{{ $skillId ? 'Edit Skill Group' : 'Add New Skill Group' }}</flux:heading>
+            <flux:heading size="lg">{{ $form?->skillId ? 'Edit Skill Group' : 'Add New Skill Group' }}</flux:heading>
             <flux:subheading>Shown like Front End Development: Javascript</flux:subheading>
             <flux:separator class="mb-6" />
             <flux:grid>
-                <flux:select placeholder="Select a skill group" wire:model="group">
+                <flux:select placeholder="Select a skill group" wire:model="form.group">
                     @foreach (\App\Enums\SkillGroup::cases() as $value)
                         <flux:select.option value="{{ $value }}">{{ $value }}</flux:select.option>
                     @endforeach
                 </flux:select>
-                <flux:input wire:model="skill" label="Skill Name" placeholder="Laravel" />
-                <flux:input wire:model="description" label="Skill Description"
+                <flux:input wire:model="form.skill" label="Skill Name" placeholder="Laravel" />
+                <flux:input wire:model="form.description" label="Skill Description"
                     placeholder="Laravel is a PHP web framework" />
-                <flux:input type="range" max="10" min="0" wire:model="level" label="Skill Level"
+                <flux:input type="range" max="10" min="0" wire:model="form.level" label="Skill Level"
                     placeholder="0-9" />
                 <flux:row no-width>
                     <flux:modal.close>
