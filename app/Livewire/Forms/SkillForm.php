@@ -22,30 +22,27 @@ class SkillForm extends Form
     #[Validate('required|numeric|digits_between:1,5')]
     public int $level = 0;
 
-    public function save()
+    public function save(): void
     {
         $this->validate();
 
-        Skill::updateOrCreate(
-            [
-                'id' => $this->skillId,
-            ],
-            [
-                'group' => $this->group,
-                'skill' => $this->skill,
-                'description' => $this->description,
-                'level' => $this->level,
-            ],
-        );
+        Skill::query()->updateOrCreate([
+            'id' => $this->skillId,
+        ], [
+            'group' => $this->group,
+            'skill' => $this->skill,
+            'description' => $this->description,
+            'level' => $this->level,
+        ]);
     }
 
-    public function delete($id)
+    public function delete($id): void
     {
-        Skill::findOrFail($id)->delete();
+        Skill::query()->findOrFail($id)->delete();
     }
 
-    public function fillById($id)
+    public function fillById($id): void
     {
-        $this->fill(Skill::select(['id as skillId', 'group', 'skill', 'description', 'level'])->findOrFail($id));
+        $this->fill(Skill::query()->select(['id as skillId', 'group', 'skill', 'description', 'level'])->findOrFail($id));
     }
 }

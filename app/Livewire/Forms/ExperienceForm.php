@@ -28,11 +28,11 @@ class ExperienceForm extends Form
     #[Validate('required|boolean')]
     public bool $current = false;
 
-    public function save()
+    public function save(): void
     {
         $this->validate();
 
-        Experience::where('id', $this->id)->update(
+        Experience::query()->where('id', $this->id)->update(
             [
                 'title' => $this->title,
                 'company' => $this->company,
@@ -44,8 +44,8 @@ class ExperienceForm extends Form
         );
     }
 
-    public function delete($id)
+    public function delete($id): void
     {
-        Experience::findOrFail($id)->delete();
+        Experience::query()->findOrFail($id)->delete();
     }
 }

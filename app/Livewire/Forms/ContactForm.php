@@ -40,16 +40,16 @@ class ContactForm extends Form
     #[Validate('required|url|max:255')]
     public $website = '';
 
-    public function setContact()
+    public function setContact(): void
     {
-        $this->fill(Contact::pluck('value', 'value_type'));
+        $this->fill(Contact::query()->pluck('value', 'value_type'));
     }
 
-    public function save()
+    public function save(): void
     {
         $validated = $this->validate();
 
-        Contact::upsert(collect($validated)->map(function ($value, $key) {
+        Contact::query()->upsert(collect($validated)->map(function ($value, $key): array {
             return [
                 'value_type' => $key,
                 'value' => $value,
