@@ -27,15 +27,9 @@ new #[Layout('components.layouts.auth')] class extends Component {
     {
         $this->validate();
 
-        // $this->ensureIsNotRateLimited();
-
-        if (! Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
-            // RateLimiter::hit($this->throttleKey());
-
-            throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
-            ]);
-        }
+        throw_unless(Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember), ValidationException::withMessages([
+            'email' => __('auth.failed'),
+        ]));
 
         RateLimiter::clear($this->throttleKey());
         Session::regenerate();

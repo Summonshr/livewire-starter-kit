@@ -13,9 +13,9 @@ new class extends Component {
         return Experience::all();
     }
 
-    public function add()
+    public function add(): void
     {
-        Experience::create([]);
+        \App\Models\Experience::query()->create([]);
     }
 }; ?>
 

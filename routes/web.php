@@ -5,14 +5,14 @@ use Livewire\Volt\Volt;
 
 Route::view('/', 'welcome')->name('home');
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function (): void {
     Route::view('dashboard', 'dashboard')->name('dashboard');
     Volt::route('contact', 'contact')->name('contact');
     Volt::route('skills', 'skills')->name('skills');
     Volt::route('experiences', 'experiences')->name('experiences');
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth'])->group(function (): void {
     Route::redirect('settings', 'settings/profile');
 
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');

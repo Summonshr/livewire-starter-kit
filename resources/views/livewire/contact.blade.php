@@ -7,12 +7,12 @@ use App\Livewire\Forms\ContactForm;
 new class extends Component {
     public ContactForm $form;
 
-    public function mount()
+    public function mount(): void
     {
         $this->form->setContact();
     }
 
-    public function save()
+    public function save(): void
     {
         $this->form->save();
     }

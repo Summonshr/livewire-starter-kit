@@ -3,9 +3,7 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
-use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
 use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
-use Rector\PostRector\Rector\UnusedImportRemovingPostRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 use RectorLaravel\Rector\BooleanNot\AvoidNegatedCollectionContainsOrDoesntContainRector;
@@ -36,7 +34,10 @@ use RectorLaravel\Set\LaravelSetList;
 
 return RectorConfig::configure()
     ->withPaths([
-        __DIR__ . '/app',
+        __DIR__.'/app',
+        __DIR__.'/routes',
+        __DIR__.'/resources',
+        __DIR__.'/tests',
     ])
     ->withSets([
         LaravelSetList::LARAVEL_110,
@@ -85,6 +86,4 @@ return RectorConfig::configure()
     ->withCodingStyleLevel(50)
     ->withImportNames()
     ->withMemoryLimit('1024M')
-    ->withTypeCoverageLevel(50)
-    ->withoutParallel();
-
+    ->withTypeCoverageLevel(50);

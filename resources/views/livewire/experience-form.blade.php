@@ -9,17 +9,17 @@ new class extends Component {
 
     public ExperienceForm $form;
 
-    public function mount(Experience $experience)
+    public function mount(Experience $experience): void
     {
         $this->form->fill($experience->getAttributes());
     }
 
-    public function save()
+    public function save(): void
     {
         $this->form->save();
     }
 
-    public function delete($id)
+    public function delete(string $id): void
     {
         $this->form->delete($id);
 

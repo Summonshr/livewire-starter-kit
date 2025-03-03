@@ -15,7 +15,7 @@ new class extends Component {
 
     public SkillForm $form;
 
-    public ?int $toDelete;
+    public ?int $toDelete = null;
 
     public function with(): array
     {
@@ -27,7 +27,7 @@ new class extends Component {
     #[\Livewire\Attributes\Computed]
     public function skills(): \Illuminate\Pagination\LengthAwarePaginator
     {
-        $skills = Skill::query()->tap(fn($query) => $this->sortBy ? $query->orderBy($this->sortBy, $this->sortDirection) : $query)->paginate(5);
+        $skills = Skill::query()->tap(fn($query) => $this->sortBy !== '' && $this->sortBy !== '0' ? $query->orderBy($this->sortBy, $this->sortDirection) : $query)->paginate(5);
 
         if ($skills->count() > 0) {
             return $skills;
@@ -35,10 +35,10 @@ new class extends Component {
 
         $this->resetPage();
 
-        return Skill::query()->tap(fn($query) => $this->sortBy ? $query->orderBy($this->sortBy, $this->sortDirection) : $query)->paginate(5);
+        return Skill::query()->tap(fn($query) => $this->sortBy !== '' && $this->sortBy !== '0' ? $query->orderBy($this->sortBy, $this->sortDirection) : $query)->paginate(5);
     }
 
-    public function updateSkill()
+    public function updateSkill(): void
     {
         $this->validate();
 
@@ -49,7 +49,7 @@ new class extends Component {
         $this->close();
     }
 
-    public function deleteSkill($id)
+    public function deleteSkill($id): void
     {
         $this->form->delete($id);
 
@@ -58,13 +58,13 @@ new class extends Component {
         $this->reset('toDelete');
     }
 
-    public function edit($id)
+    public function edit($id): void
     {
         $this->form->fillById($id);
         $this->modal('skill-form')->show();
     }
 
-    public function close()
+    public function close(): void
     {
         $this->reset();
         $this->resetValidation();
