@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('skills', function (Blueprint $table) {
-            $table->increments('id')->primary();
+            $table->id();
             $table->string('group');
             $table->unsignedInteger('group_rank')->default(0);
             $table->string('skill')->nullable();

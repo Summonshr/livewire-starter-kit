@@ -3,7 +3,6 @@
 namespace App\Livewire\Forms;
 
 use App\Models\Contact;
-use Flux\Flux;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
