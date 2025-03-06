@@ -44,8 +44,8 @@ class ExperienceForm extends Form
         );
     }
 
-    public function delete($id): void
+    public function delete(): void
     {
-        Experience::query()->findOrFail($id)->delete();
+        Experience::query()->findOrFail($this->id)->delete();
     }
 }

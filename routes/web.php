@@ -10,6 +10,7 @@ Route::middleware(['auth', 'verified'])->group(function (): void {
     Volt::route('contact', 'contact')->name('contact');
     Volt::route('skills', 'skills')->name('skills');
     Volt::route('experiences', 'experiences')->name('experiences');
+    Volt::route('projects', 'projects')->name('projects');
 });
 
 Route::middleware(['auth'])->group(function (): void {
