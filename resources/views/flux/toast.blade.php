@@ -1,6 +1,6 @@
 <ui-notify x-data="{}" x-on:notify.document="$el.notify($event.detail)" wire:ignore role="toast">
     <template>
-        <div popover="manual" class="m-0 p-6 bg-transparent [&[data-position*=top]]:mb-auto [&[data-position*=bottom]]:mt-auto [&[data-position*=right]]:ml-auto [&[data-position*=left]]:mr-auto pt-24" data-position="bottom right" data-variant="" data-flux-toast-dialog="">
+        <div popover="manual" class="m-0 p-6 bg-transparent [&[data-position*=top]]:mb-auto [&[data-position*=bottom]]:mt-auto [&[data-position*=right]]:ml-auto [&[data-position*=left]]:mr-auto pt-24" data-position="" data-variant="" data-flux-toast-dialog="">
             <div class="max-w-sm p-2 rounded-xl shadow-lg bg-white border border-zinc-200 border-b-zinc-300/80 dark:bg-zinc-700 dark:border-zinc-600">
                 <div class="flex items-start gap-4">
                     <div class="flex-1 py-1.5 pl-2.5 flex gap-2">
@@ -68,7 +68,6 @@
                     toast.querySelector(`slot[name="${name}"]`)?.parentElement?.remove();
                 }
             });
-
             Object.assign(toast.dataset, dataset);
             toast.querySelectorAll("slot").forEach((slot) => slot.remove());
 
