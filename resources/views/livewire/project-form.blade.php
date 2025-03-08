@@ -7,7 +7,6 @@ use Livewire\Volt\Component;
 
 new class extends Component {
     use WithNotification;
-
     public Project $project;
 
     public ProjectForm $form;
@@ -20,7 +19,7 @@ new class extends Component {
     public function save(): void
     {
         $this->form->save();
-        $this->notify("Item Saved successfully", 'success');
+        $this->notify('Project saved')->info()->send();
     }
 
     public function delete(string $id): void
