@@ -1,8 +1,10 @@
 <?php
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-test('returns a successful response', function () {
+uses(RefreshDatabase::class);
+
+test('returns a successful response', function (): void {
     $response = $this->get('/');
 
     $response->assertOk();

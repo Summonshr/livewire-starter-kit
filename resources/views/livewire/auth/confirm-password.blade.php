@@ -24,7 +24,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
             'password' => __('auth.password'),
         ]));
 
-        session(['auth.password_confirmed_at' => time()]);
+        session(['auth.password_confirmed_at' => \Carbon\Carbon::now()->timestamp]);
 
         $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
     }

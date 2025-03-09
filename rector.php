@@ -2,10 +2,13 @@
 
 declare(strict_types=1);
 
+use Rector\Arguments\Rector\ClassMethod\ArgumentAdderRector;
+use Rector\Carbon\NodeFactory\CarbonCallFactory;
 use Rector\Config\RectorConfig;
 use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
+use Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector;
 use RectorLaravel\Rector\BooleanNot\AvoidNegatedCollectionContainsOrDoesntContainRector;
 use RectorLaravel\Rector\Class_\ModelCastsPropertyToCastsMethodRector;
 use RectorLaravel\Rector\Class_\UnifyModelDatesWithCastsRector;
@@ -34,10 +37,10 @@ use RectorLaravel\Set\LaravelSetList;
 
 return RectorConfig::configure()
     ->withPaths([
-        __DIR__.'/app',
-        __DIR__.'/routes',
-        __DIR__.'/resources',
-        __DIR__.'/tests',
+        __DIR__ . '/app',
+        __DIR__ . '/routes',
+        __DIR__ . '/resources',
+        __DIR__ . '/tests',
     ])
     ->withSets([
         LaravelSetList::LARAVEL_110,
@@ -54,6 +57,7 @@ return RectorConfig::configure()
         SetList::INSTANCEOF,
     ])->withSkip([
         ClosureToArrowFunctionRector::class,
+        DeclareStrictTypesRector::class,
     ])
     ->withRules([
         AbortIfRector::class,
@@ -80,10 +84,21 @@ return RectorConfig::configure()
         UnaliasCollectionMethodsRector::class,
         UnifyModelDatesWithCastsRector::class,
         WhereToWhereLikeRector::class,
+        ArgumentAdderRector::class,
     ])
-    ->withDeadCodeLevel(50)
-    ->withCodeQualityLevel(50)
-    ->withCodingStyleLevel(50)
+    ->withPreparedSets(
+        deadCode: true,
+        codeQuality: true,
+        codingStyle: true,
+        typeDeclarations: true,
+        privatization: true,
+        earlyReturn: true,
+        strictBooleans: true,
+        naming: true,
+        instanceOf: true,
+        carbon: true,
+        rectorPreset: true,
+        symfonyCodeQuality: true,
+    )
     ->withImportNames()
-    ->withMemoryLimit('1024M')
-    ->withTypeCoverageLevel(50);
+    ->withMemoryLimit('2048M');

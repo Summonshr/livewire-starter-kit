@@ -1,7 +1,9 @@
 <?php
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-test('that true is true', function () {
+uses(RefreshDatabase::class);
+
+test('that true is true', function (): void {
     expect(true)->toBeTrue();
 });

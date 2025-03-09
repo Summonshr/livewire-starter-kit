@@ -41,7 +41,7 @@ class ProjectForm extends Form
 
     }
 
-    public function delete()
+    public function delete(): void
     {
         Project::query()->findOrFail($this->id)->delete();
     }

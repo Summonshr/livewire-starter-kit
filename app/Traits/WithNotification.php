@@ -8,9 +8,9 @@ trait WithNotification
 {
     public function notify(string $subtitle = '', string $title = '', string $variant = 'info', string $position = 'bottom right', int $duration = 3000): object
     {
-        return new class($subtitle, $title, $variant, $position = 'bottom right', $duration, $this->dispatch(...))
+        return new class($subtitle, $title, $variant, $duration, $this->dispatch(...), $position = 'bottom right')
         {
-            public function __construct(public string $subtitle, public string $title, public string $type, public string $position = 'bottom right', public int $duration, public Closure $dispatch) {}
+            public function __construct(public string $subtitle, public string $title, public string $type, public int $duration, public Closure $dispatch, public string $position = 'bottom right') {}
 
             public function title(string $title): self
             {

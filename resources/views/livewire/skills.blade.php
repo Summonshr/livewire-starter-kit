@@ -27,10 +27,10 @@ new class extends Component {
     #[\Livewire\Attributes\Computed]
     public function skills(): \Illuminate\Pagination\LengthAwarePaginator
     {
-        $skills = Skill::query()->tap(fn($query) => $this->sortBy !== '' && $this->sortBy !== '0' ? $query->orderBy($this->sortBy, $this->sortDirection) : $query)->paginate(5);
+        $lengthAwarePaginator = Skill::query()->tap(fn($query) => $this->sortBy !== '' && $this->sortBy !== '0' ? $query->orderBy($this->sortBy, $this->sortDirection) : $query)->paginate(5);
 
-        if ($skills->count() > 0) {
-            return $skills;
+        if ($lengthAwarePaginator->count() > 0) {
+            return $lengthAwarePaginator;
         }
 
         $this->resetPage();
