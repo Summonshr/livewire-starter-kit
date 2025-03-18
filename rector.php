@@ -2,9 +2,21 @@
 
 declare(strict_types=1);
 
+use RectorLaravel\Rector\ClassMethod\MigrateToSimplifiedAttributeRector;
 use Rector\Arguments\Rector\ClassMethod\ArgumentAdderRector;
-use Rector\Carbon\NodeFactory\CarbonCallFactory;
+use Rector\Arguments\Rector\ClassMethod\ReplaceArgumentDefaultValueRector;
+use Rector\CodeQuality\Rector\Class_\CompleteDynamicPropertiesRector;
+use Rector\CodeQuality\Rector\ClassMethod\ExplicitReturnNullRector;
+use Rector\CodeQuality\Rector\FuncCall\ArrayMergeOfNonArraysToSimpleArrayRector;
+use Rector\CodeQuality\Rector\FuncCall\CallUserFuncWithArrowFunctionToInlineRector;
+use Rector\CodeQuality\Rector\FuncCall\ChangeArrayPushToArrayAssignRector;
+use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
+use Rector\CodeQuality\Rector\If_\CombineIfRector;
+use Rector\CodeQuality\Rector\If_\CompleteMissingIfElseBracketRector;
+use Rector\CodeQuality\Rector\NullsafeMethodCall\CleanupUnneededNullsafeOperatorRector;
 use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector\Assign\RemoveUnusedVariableAssignRector;
+use Rector\DeadCode\Rector\Foreach_\RemoveUnusedForeachKeyRector;
 use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
@@ -62,29 +74,40 @@ return RectorConfig::configure()
     ->withRules([
         AbortIfRector::class,
         AddGenericReturnTypeToRelationsRector::class,
-        AddParentBootToModelClassMethodRector::class,
         ApplyDefaultInsteadOfNullCoalesceRector::class,
+        ArgumentAdderRector::class,
+        ArrayMergeOfNonArraysToSimpleArrayRector::class,
         AssertSeeToAssertSeeHtmlRector::class,
         AssertStatusToAssertMethodRector::class,
         AvoidNegatedCollectionContainsOrDoesntContainRector::class,
         AvoidNegatedCollectionFilterOrRejectRector::class,
+        CallUserFuncWithArrowFunctionToInlineRector::class,
+        ChangeArrayPushToArrayAssignRector::class,
+        CleanupUnneededNullsafeOperatorRector::class,
+        CombineIfRector::class,
+        CompleteDynamicPropertiesRector::class,
+        CompleteMissingIfElseBracketRector::class,
         EloquentMagicMethodToQueryBuilderRector::class,
         EloquentOrderByToLatestOrOldestRector::class,
+        AddParentBootToModelClassMethodRector::class,
         EloquentWhereRelationTypeHintingParameterRector::class,
         EloquentWhereTypeHintClosureParameterRector::class,
         EmptyToBlankAndFilledFuncRector::class,
+        MigrateToSimplifiedAttributeRector::class,
+        ExplicitReturnNullRector::class,
+        FlipTypeControlToUseExclusiveTypeRector::class,
         ModelCastsPropertyToCastsMethodRector::class,
         NotFilledBlankFuncCallToBlankFilledFuncCallRector::class,
         RedirectBackToBackHelperRector::class,
         RedirectRouteToToRouteHelperRector::class,
         RemoveDumpDataDeadCodeRector::class,
-        ReverseConditionableMethodCallRector::class,
+        RemoveUnusedForeachKeyRector::class,
+        RemoveUnusedVariableAssignRector::class,
+        ReplaceArgumentDefaultValueRector::class,
         RouteActionCallableRector::class,
         ThrowIfRector::class,
         UnaliasCollectionMethodsRector::class,
         UnifyModelDatesWithCastsRector::class,
-        WhereToWhereLikeRector::class,
-        ArgumentAdderRector::class,
     ])
     ->withPreparedSets(
         deadCode: true,

@@ -2,10 +2,24 @@
 
 declare(strict_types=1);
 
-use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
+use Rector\Arguments\Rector\ClassMethod\ArgumentAdderRector;
+use Rector\Arguments\Rector\ClassMethod\ReplaceArgumentDefaultValueRector;
+use Rector\CodeQuality\Rector\Class_\CompleteDynamicPropertiesRector;
+use Rector\CodeQuality\Rector\FuncCall\ArrayMergeOfNonArraysToSimpleArrayRector;
+use Rector\CodeQuality\Rector\FuncCall\CallUserFuncWithArrowFunctionToInlineRector;
+use Rector\CodeQuality\Rector\FuncCall\ChangeArrayPushToArrayAssignRector;
+use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
+use Rector\CodeQuality\Rector\If_\CombineIfRector;
+use Rector\CodeQuality\Rector\NullsafeMethodCall\CleanupUnneededNullsafeOperatorRector;
 use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector\Assign\RemoveUnusedVariableAssignRector;
+use Rector\DeadCode\Rector\Foreach_\RemoveUnusedForeachKeyRector;
+use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
+use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
+use Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector;
 use RectorLaravel\Rector\Class_\UnifyModelDatesWithCastsRector;
+use RectorLaravel\Rector\ClassMethod\AddGenericReturnTypeToRelationsRector;
 use RectorLaravel\Rector\ClassMethod\AddParentBootToModelClassMethodRector;
 use RectorLaravel\Rector\Empty_\EmptyToBlankAndFilledFuncRector;
 use RectorLaravel\Rector\FuncCall\NotFilledBlankFuncCallToBlankFilledFuncCallRector;
@@ -23,41 +37,67 @@ use RectorLaravel\Set\LaravelSetList;
 
 return RectorConfig::configure()
     ->withPaths([
-        __DIR__.'/app',
-        __DIR__.'/routes',
-        __DIR__.'/resources',
-        __DIR__.'/tests',
+        __DIR__ . '/app',
+        __DIR__ . '/routes',
+        __DIR__ . '/resources',
+        __DIR__ . '/tests',
     ])
     ->withSets([
+        LaravelSetList::LARAVEL_100,
         LaravelSetList::LARAVEL_CODE_QUALITY,
         LaravelSetList::ARRAY_STR_FUNCTIONS_TO_STATIC_CALL,
         LaravelSetList::LARAVEL_ARRAY_STR_FUNCTION_TO_STATIC_CALL,
+        LaravelSetList::LARAVEL_CODE_QUALITY,
         LaravelSetList::LARAVEL_LEGACY_FACTORIES_TO_CLASSES,
+        LevelSetList::UP_TO_PHP_82,
         SetList::EARLY_RETURN,
         SetList::INSTANCEOF,
-    ])
-    ->withSkip([
-        SimplifyIfElseToTernaryRector::class,
+    ])->withSkip([
+        ClosureToArrowFunctionRector::class,
+        DeclareStrictTypesRector::class,
     ])
     ->withRules([
-        AddParentBootToModelClassMethodRector::class,
+        AddGenericReturnTypeToRelationsRector::class,
+        ArgumentAdderRector::class,
+        ArrayMergeOfNonArraysToSimpleArrayRector::class,
         AssertStatusToAssertMethodRector::class,
+        CallUserFuncWithArrowFunctionToInlineRector::class,
+        ChangeArrayPushToArrayAssignRector::class,
+        CleanupUnneededNullsafeOperatorRector::class,
+        CombineIfRector::class,
+        CompleteDynamicPropertiesRector::class,
         EloquentMagicMethodToQueryBuilderRector::class,
         EloquentOrderByToLatestOrOldestRector::class,
+        AddParentBootToModelClassMethodRector::class,
         EloquentWhereRelationTypeHintingParameterRector::class,
         EloquentWhereTypeHintClosureParameterRector::class,
         EmptyToBlankAndFilledFuncRector::class,
+        \RectorLaravel\Rector\ClassMethod\MigrateToSimplifiedAttributeRector::class,
+        FlipTypeControlToUseExclusiveTypeRector::class,
         NotFilledBlankFuncCallToBlankFilledFuncCallRector::class,
         RedirectBackToBackHelperRector::class,
         RedirectRouteToToRouteHelperRector::class,
         RemoveDumpDataDeadCodeRector::class,
+        RemoveUnusedForeachKeyRector::class,
+        RemoveUnusedVariableAssignRector::class,
+        ReplaceArgumentDefaultValueRector::class,
         RouteActionCallableRector::class,
         ThrowIfRector::class,
         UnifyModelDatesWithCastsRector::class,
     ])
-    ->withDeadCodeLevel(50)
-    ->withCodeQualityLevel(50)
-    ->withCodingStyleLevel(50)
+    ->withPreparedSets(
+        deadCode: true,
+        codeQuality: true,
+        codingStyle: true,
+        typeDeclarations: true,
+        privatization: true,
+        earlyReturn: true,
+        strictBooleans: true,
+        naming: true,
+        instanceOf: true,
+        carbon: true,
+        rectorPreset: true,
+        symfonyCodeQuality: true,
+    )
     ->withImportNames()
-    ->withMemoryLimit('1024M')
-    ->withTypeCoverageLevel(50);
+    ->withMemoryLimit('2048M');
