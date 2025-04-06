@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('contacts', function (Blueprint $table) {
+        Schema::table('contacts', static function (Blueprint $table): void {
             $table->longText('value')->nullable()->change();
         });
     }

@@ -23,11 +23,11 @@ new class extends Component {
     {
         $this->form->delete();
 
-        $this->modal('delete-profile-'.$id)->close();
+        $this->modal('delete-profile-' . $id)->close();
 
         $this->dispatch('refreshParentComponent');
-
     }
+
 }; ?>
 <flux:grid>
     <flux:grid cols="2" class="mb-6">

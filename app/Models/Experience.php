@@ -6,13 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Experience extends Model
 {
-    public $casts = [
-        'start_date' => 'date',
-        'end_date' => 'date',
-        'current' => 'boolean',
-    ];
-
-    public $fillable = [
+    protected $fillable = [
         'title',
         'company',
         'position',
@@ -21,4 +15,13 @@ class Experience extends Model
         'end_date',
         'current',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'start_date' => 'date',
+            'end_date' => 'date',
+            'current' => 'boolean',
+        ];
+    }
 }

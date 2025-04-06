@@ -8,22 +8,22 @@ use Livewire\Form;
 
 class ProjectForm extends Form
 {
-    public ?int $id = null;
+    public null|int $id = null;
 
     #[Validate('required|string|max:100')]
-    public ?string $title = '';
+    public null|string $title = '';
 
     #[Validate('required|string|max:500')]
-    public ?string $description = '';
+    public null|string $description = '';
 
     #[Validate('required|string|max:100')]
-    public ?string $url = '';
+    public null|string $url = '';
 
     #[Validate('required|string|max:100')]
-    public ?string $github_url = '';
+    public null|string $github_url = '';
 
     #[Validate('image|nullable')]
-    public ?string $image = null;
+    public null|string $image = null;
 
     public function save(): void
     {

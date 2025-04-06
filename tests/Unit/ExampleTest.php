@@ -4,6 +4,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-test('that true is true', function (): void {
+test('that true is true', static function (): void {
     expect(true)->toBeTrue();
 });

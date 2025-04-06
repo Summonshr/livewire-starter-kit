@@ -5,7 +5,7 @@ use Livewire\Volt\Volt;
 
 Route::view('/', 'welcome')->name('home');
 
-Route::middleware(['auth', 'verified'])->group(function (): void {
+Route::middleware(['auth', 'verified'])->group(static function (): void {
     Route::view('dashboard', 'dashboard')->name('dashboard');
     Volt::route('contact', 'contact')->name('contact');
     Volt::route('skills', 'skills')->name('skills');
@@ -13,7 +13,7 @@ Route::middleware(['auth', 'verified'])->group(function (): void {
     Volt::route('projects', 'projects')->name('projects');
 });
 
-Route::middleware(['auth'])->group(function (): void {
+Route::middleware(['auth'])->group(static function (): void {
     Route::redirect('settings', 'settings/profile');
 
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
@@ -21,4 +21,4 @@ Route::middleware(['auth'])->group(function (): void {
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

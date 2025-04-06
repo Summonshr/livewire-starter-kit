@@ -6,9 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Contact extends Model
 {
-    public $timestamps = false;
-
-    public $fillable = [
+    protected $fillable = [
         'name',
         'email',
         'phone',
@@ -17,4 +15,6 @@ class Contact extends Model
         'github',
         'website',
     ];
+
+    public $timestamps = false;
 }

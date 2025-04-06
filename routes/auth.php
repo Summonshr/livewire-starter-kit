@@ -5,7 +5,7 @@ use App\Livewire\Actions\Logout;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
-Route::middleware('guest')->group(function (): void {
+Route::middleware('guest')->group(static function (): void {
     Volt::route('login', 'auth.login')
         ->name('login');
 
@@ -19,7 +19,7 @@ Route::middleware('guest')->group(function (): void {
         ->name('password.reset');
 });
 
-Route::middleware('auth')->group(function (): void {
+Route::middleware('auth')->group(static function (): void {
     Volt::route('verify-email', 'auth.verify-email')
         ->name('verification.notice');
 

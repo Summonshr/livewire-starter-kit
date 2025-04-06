@@ -8,7 +8,7 @@ use Livewire\Form;
 
 class SkillForm extends Form
 {
-    public ?int $skillId = null;
+    public null|int $skillId = null;
 
     #[Validate('required|string|max:100')]
     public string $group = '';

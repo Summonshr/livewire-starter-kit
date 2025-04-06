@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Skill extends Model
 {
-    public $fillable = [
+    protected $fillable = [
         'group',
         'group_rank',
         'skill',

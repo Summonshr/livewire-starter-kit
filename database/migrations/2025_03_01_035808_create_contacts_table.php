@@ -1,4 +1,5 @@
 <?php
+
 // database/migrations/xxxx_create_contacts_table.php
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -9,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('contacts', function (Blueprint $table) {
+        Schema::create('contacts', static function (Blueprint $table): void {
             $table->string('value_type', 20)->unique()->primary();
             $table->string('value');
         });
@@ -24,12 +25,10 @@ return new class extends Migration
             'github' => 'https://github.com/summonshr',
             'x' => 'https://x.com/sumfreelancer',
             'website' => 'https://sumanshresth.com.np',
-        ])->map(function ($value, $key) {
-            return [
-                'value_type' => $key,
-                'value' => $value,
-            ];
-        })->toArray());
+        ])->map(static fn ($value, $key) => [
+            'value_type' => $key,
+            'value' => $value,
+        ])->toArray());
     }
 
     public function down(): void

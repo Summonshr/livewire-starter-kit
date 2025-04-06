@@ -21,6 +21,7 @@ use Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector;
 use RectorLaravel\Rector\Class_\UnifyModelDatesWithCastsRector;
 use RectorLaravel\Rector\ClassMethod\AddGenericReturnTypeToRelationsRector;
 use RectorLaravel\Rector\ClassMethod\AddParentBootToModelClassMethodRector;
+use RectorLaravel\Rector\ClassMethod\MigrateToSimplifiedAttributeRector;
 use RectorLaravel\Rector\Empty_\EmptyToBlankAndFilledFuncRector;
 use RectorLaravel\Rector\FuncCall\NotFilledBlankFuncCallToBlankFilledFuncCallRector;
 use RectorLaravel\Rector\FuncCall\RemoveDumpDataDeadCodeRector;
@@ -51,7 +52,6 @@ return RectorConfig::configure()
         LaravelSetList::LARAVEL_LEGACY_FACTORIES_TO_CLASSES,
         LevelSetList::UP_TO_PHP_82,
         SetList::EARLY_RETURN,
-        SetList::INSTANCEOF,
     ])->withSkip([
         ClosureToArrowFunctionRector::class,
         DeclareStrictTypesRector::class,
@@ -66,13 +66,13 @@ return RectorConfig::configure()
         CleanupUnneededNullsafeOperatorRector::class,
         CombineIfRector::class,
         CompleteDynamicPropertiesRector::class,
+        MigrateToSimplifiedAttributeRector::class,
         EloquentMagicMethodToQueryBuilderRector::class,
         EloquentOrderByToLatestOrOldestRector::class,
         AddParentBootToModelClassMethodRector::class,
         EloquentWhereRelationTypeHintingParameterRector::class,
         EloquentWhereTypeHintClosureParameterRector::class,
         EmptyToBlankAndFilledFuncRector::class,
-        \RectorLaravel\Rector\ClassMethod\MigrateToSimplifiedAttributeRector::class,
         FlipTypeControlToUseExclusiveTypeRector::class,
         NotFilledBlankFuncCallToBlankFilledFuncCallRector::class,
         RedirectBackToBackHelperRector::class,
@@ -94,7 +94,6 @@ return RectorConfig::configure()
         earlyReturn: true,
         strictBooleans: true,
         naming: true,
-        instanceOf: true,
         carbon: true,
         rectorPreset: true,
         symfonyCodeQuality: true,

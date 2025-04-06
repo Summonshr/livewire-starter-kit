@@ -8,22 +8,22 @@ use Livewire\Form;
 
 class ExperienceForm extends Form
 {
-    public ?int $id = null;
+    public null|int $id = null;
 
     #[Validate('required|string|max:100')]
-    public ?string $title = '';
+    public null|string $title = '';
 
     #[Validate('required|string|max:100')]
-    public ?string $company = '';
+    public null|string $company = '';
 
     #[Validate('required|date|before:end_date')]
-    public ?string $start_date = '';
+    public null|string $start_date = '';
 
     #[Validate('required|date|after:start_date')]
-    public ?string $end_date = '';
+    public null|string $end_date = '';
 
     #[Validate('required|string|max:5000')]
-    public ?string $summary = '';
+    public null|string $summary = '';
 
     #[Validate('required|boolean')]
     public bool $current = false;

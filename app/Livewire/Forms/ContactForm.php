@@ -8,7 +8,6 @@ use Livewire\Form;
 
 class ContactForm extends Form
 {
-
     #[Validate('required|string|max:1000')]
     public $summary = '';
 
@@ -48,11 +47,9 @@ class ContactForm extends Form
     {
         $validated = $this->validate();
 
-        Contact::query()->upsert(collect($validated)->map(function ($value, $key): array {
-            return [
-                'value_type' => $key,
-                'value' => $value,
-            ];
-        })->toArray(), ['value_type']);
+        Contact::query()->upsert(collect($validated)->map(static fn ($value, $key): array => [
+            'value_type' => $key,
+            'value' => $value,
+        ])->toArray(), ['value_type']);
     }
 }

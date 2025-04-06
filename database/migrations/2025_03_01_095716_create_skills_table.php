@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('skills', function (Blueprint $table) {
+        Schema::create('skills', static function (Blueprint $table): void {
             $table->id();
             $table->string('group');
             $table->unsignedInteger('group_rank')->default(0);
